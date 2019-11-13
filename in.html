@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>html_5 and css 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <style>
+        #clock{
+            border: 10px;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="clock" height="500" width="500">
+
+</canvas>
+<script>
+    function stetime() {
+
+
+        var myconvas = document.getElementById('clock');
+        var context = myconvas.getContext('2d');
+        var clockradiu = myconvas.width / 2;
+        context.beginPath();
+        context.fillStyle='black';
+        context.arc(clockradiu, clockradiu, clockradiu, 0, 2 * Math.PI);
+        context.fill();
+        context.font = clockradiu / 8 + 'px';
+        context.fillStyle = 'white';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText('12', clockradiu, clockradiu - (clockradiu * 0.9));
+        for (var i = 1; i < 12; i++) {
+            context.fillText(i, clockradiu + clockradiu * 0.9 * Math.sin(i * 2 * Math.PI / 12), clockradiu - (clockradiu * 0.9 * Math.cos(i * 2 * Math.PI / 12)));
+        }
+        var hour = new Date().getHours();
+        var minite = new Date().getMinutes();
+        var second = new Date().getSeconds();
+        var fullhour = hour % 12 + minite / 60 + second / 3600;
+        var hourangle = fullhour * Math.PI * 2 / 12;
+        var miniteangle = minite * Math.PI * 2 / 60;
+        var secondangle = second * Math.PI * 2 / 60;
+
+        context.strokeStyle = 'white';
+        context.moveTo(clockradiu, clockradiu);
+        context.lineTo(clockradiu + clockradiu * 0.6 * Math.sin(hourangle), clockradiu - (clockradiu * 0.6 * Math.cos(hourangle)));
+        context.lineWidth = 5;
+        context.stroke();
+
+        context.strokeStyle = 'white';
+        context.moveTo(clockradiu, clockradiu);
+        context.lineTo(clockradiu + clockradiu * 0.7 * Math.sin(miniteangle), clockradiu - (clockradiu * 0.7 * Math.cos(miniteangle)));
+        context.lineWidth = 3;
+        context.stroke();
+
+        context.strokeStyle = 'white';
+        context.moveTo(clockradiu, clockradiu);
+        context.lineTo(clockradiu + clockradiu * 0.8 * Math.sin(secondangle), clockradiu - (clockradiu * 0.8 * Math.cos(secondangle)));
+        context.lineWidth = 1;
+        context.stroke();
+    }
+setInterval(stetime,1000);
+</script>
+</body>
+</html>
